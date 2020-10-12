@@ -1,0 +1,97 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
+    <style>
+        #mytextarea
+        {
+            box-shadow: 10px 10px 10px grey;
+        }
+        canvas
+        {
+            box-shadow: 10px 10px 10px grey;
+            border-radius: 20px;
+        }
+    </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <center>
+            <div id="canvasholder"></div>
+            <br><br><br>
+            <label>Your code :</label>
+            <br>
+            <textarea id="mytextarea" rows="10" cols="50"></textarea>
+            <br><br><br>
+            <button onclick="d()" class="btn btn-success">Run Code</button>
+
+            </center>
+        </div>
+
+    </body>
+    <script>
+        cx = 0
+        cy = 0
+        cr = 0
+        cset =""
+ 
+        function preload(){
+        }
+
+        function setup() {
+        canvas = createCanvas(400, 400);
+        canvas.parent('canvasholder');
+        }
+
+        function draw() {
+            canvas.background("#0b334c");
+            if(cset == "set")
+            {
+                circle(cx,cy,cr);
+            }
+        }
+        
+        function d()
+        {
+            var text = $('#mytextarea').val();  
+            var lines = $('#mytextarea').val().split('\n');//gives all lines
+            for(var i = 0; i <lines.length; i++)
+            {
+                firstLine=lines[i];
+                console.log(firstLine);
+                n = firstLine.charAt(5);
+                console.log(n);
+
+                x1 = firstLine.charAt(7);
+                x2 = firstLine.charAt(8);
+                mx = x1.concat(x2)
+                console.log(mx);
+
+                y1 = firstLine.charAt(10);
+                y2 = firstLine.charAt(11);
+                my = y1.concat(y2)
+                console.log(my);
+
+                r1 = firstLine.charAt(13);
+                r2 = firstLine.charAt(14);
+                mr = r1.concat(r2)
+                console.log(mr);
+
+                if(n == "c")
+                {
+                    cset = "set";
+                    cx = mx
+                    cy = my
+                    cr = mr
+                }
+
+            }
+        }
+
+
+    </script>
+</html>
