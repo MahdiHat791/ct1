@@ -1,0 +1,161 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
+    <style>
+        #mytextarea
+        {
+            box-shadow: 10px 10px 10px grey;
+            width: 100%;
+            background: #0b334c;
+            color: #faff00;
+            font-size: 20px;
+            padding: 20px;
+        }
+        canvas
+        {
+            box-shadow: 10px 10px 10px grey;
+            border-radius: 10px;
+        }
+        button , a
+        {
+            width: 300px;
+        }
+        #header
+        {
+            width: 100%;
+            color: white;
+            padding:10px;
+            font-size: 20px;
+            background-color: #0b334c;
+        }
+    </style>
+    </head>
+
+    <body>
+        <div id="header">
+            Code With WhitehatJr
+        </div>
+        <br>
+            <form id="form">
+                <input type="file" class="form-control" id="file" name="file" accept="image/*">
+                </form>
+            
+            <center>
+            <div id="canvasholder"></div>
+            <br><br><br>
+            <div style="text-align: left;"> <b style="padding:10px;">Your code :</b></div>
+            <br>
+            <textarea id="mytextarea" rows="10" cols="50"></textarea>
+            <br><br><br>
+            <button onclick="d()" class="btn btn-success">Run Code</button>
+            <br><br>
+            <button onclick="clean()" class="btn btn-warning">Remove Hat</button>
+            <br><br>
+            <button onclick="selfie()" class="btn btn-info">Save Image</button>
+            <br><br>
+            <a href="index.html" class="btn btn-danger">Back</a>
+
+            </center>
+
+    </body>
+    <script>
+upload = ""
+get_img = ""
+check =0;
+document.getElementById('file').addEventListener("change", function (e) {
+
+var file = e.target.files[0];
+var reader = new FileReader();
+reader.onload = function (f) {
+    get_img = f.target.result;   
+    upload = "set";
+    check = 0;
+};
+reader.readAsDataURL(file);
+});
+        hx = 0;
+        hy = 0;
+        hw = 0;
+        hh = 0;
+        hset ="";
+        function preload(){
+            hat = loadImage("hat.png");
+            if(upload == "set")
+            {
+                img = loadImage(get_img);
+                console.log(get_img);
+            }
+        }
+
+        function setup() {
+        canvas = createCanvas(400, 400);
+        canvas.parent('canvasholder');
+        }
+
+        function draw() {
+            if(check ==0)
+            {
+                preload();
+                check = check +1;
+            }
+            if(upload == "set")
+            {
+                background(img);
+            }
+            if(hset == "set")
+            {
+                image(hat,hx,hy,hw,hh);
+            }
+        }
+        hat_count = 0;
+        function d()
+        {
+            var text = $('#mytextarea').val();  
+            var lines = $('#mytextarea').val().split('\n');//gives all lines
+
+            hat_count = hat_count + 1;
+            if(hat_count >1)
+            {
+                clean();
+                hat_count = 0;
+            }
+                        
+            for(var i = 0; i <lines.length; i++)
+            {
+                firstLine=lines[i];
+                console.log(firstLine);
+                val1 = firstLine.substr(firstLine.indexOf("(") + 1);
+                val2 = val1.substr(0, val1.indexOf(')')); 
+                final_val = val2.trim().split(",");
+                console.log(final_val);
+                if(final_val[0] == "hat")
+                {
+                    hset = "set";
+                    hx = final_val[1];
+                    hy = final_val[2];
+                    hw = final_val[3];
+                    hh = final_val[4];
+                }
+
+            }
+        }
+
+        function clean()
+        {
+            clear();
+            hx = -1;
+            hy = -1;
+            hw = -1;
+            hh = -1;
+        }
+        function selfie()
+        {
+            save('myimage.png');
+        }
+
+    </script>
+</html>
